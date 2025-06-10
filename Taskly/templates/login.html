@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block title %}Login - Secure Task Manager{% endblock %}
-
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
@@ -16,28 +14,25 @@
                     {{ form.hidden_tag() }}
 
                     <div class="mb-3">
-    {{ form.username.label(class="form-label fw-bold") }}
-    {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder="Enter your username", autocomplete="username") }}
-    {% for error in form.username.errors %}
-        <div class="invalid-feedback d-block">{{ error }}</div>
-    {% endfor %}
-</div>
-
+                        {{ form.username.label(class="form-label fw-bold") }}
+                        {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder="Enter your username", autocomplete="username") }}
+                        {% for error in form.username.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
 
                     <div class="mb-3">
-    {{ form.password.label(class="form-label fw-bold") }}
-    <div class="input-group d-flex align-items-center justify-content-center">
-        {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), placeholder="Enter your password", id="passwordField", autocomplete="current-password") }}
-        <button class="btn btn-outline-secondary toggle-password d-flex align-items-center justify-content-center" type="button" aria-label="Toggle password visibility" onclick="togglePasswordVisibility()">
-            <img id="togglePasswordIcon" src="{{ url_for('static', filename='icons/eye-open.png') }}" alt="Show password" width="20" height="20">
-        </button>
-    </div>
-    {% for error in form.password.errors %}
-        <div class="invalid-feedback d-block">{{ error }}</div>
-    {% endfor %}
-</div>
-
-
+                        {{ form.password.label(class="form-label fw-bold") }}
+                        <div class="input-group">
+                            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), placeholder="Enter your password", id="passwordField", autocomplete="current-password") }}
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility()">
+                                <i id="togglePasswordIcon" class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                        {% for error in form.password.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
 
                     <div class="d-grid mb-3">
                         {{ form.submit(class="btn btn-primary btn-lg fw-bold") }}
@@ -55,17 +50,12 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.querySelector('.toggle-password');
+function togglePasswordVisibility() {
     const passwordField = document.getElementById('passwordField');
-    const icon = toggleBtn.querySelector('i');
-
-    toggleBtn.addEventListener('click', function () {
-        const isVisible = passwordField.type === 'text';
-        passwordField.type = isVisible ? 'password' : 'text';
-        icon.classList.toggle('bi-eye-fill', isVisible);
-        icon.classList.toggle('bi-eye-slash-fill', !isVisible);
-    });
-});
+    const icon = document.getElementById('togglePasswordIcon');
+    const isVisible = passwordField.type === 'text';
+    passwordField.type = isVisible ? 'password' : 'text';
+    icon.className = isVisible ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+}
 </script>
 {% endblock %}
